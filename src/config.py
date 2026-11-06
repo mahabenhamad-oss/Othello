@@ -1,0 +1,1 @@
+BOARDSIZE = 8
