@@ -1,5 +1,6 @@
-
 from piece import Piece
+from datatypes import Color
+
 
 class Board:
     def __init__(self):
@@ -7,12 +8,12 @@ class Board:
         self.board = [[None for _ in range(8)] for _ in range(8)]
 
         # Configuration initiale d'Othello
-        self.board[3][3] = Piece("white")
-        self.board[3][4] = Piece("black")
-        self.board[4][3] = Piece("black")
-        self.board[4][4] = Piece("white")
+        self.board[3][3] = Piece(Color.WHITE)
+        self.board[3][4] = Piece(Color.BLACK)
+        self.board[4][3] = Piece(Color.BLACK)
+        self.board[4][4] = Piece(Color.WHITE)
 
-    def set_piece(self, coord, color):
+    def set_piece(self, coord, color: Color):
         # Récupérer les coordonnées
         row, col = coord
 
@@ -21,7 +22,7 @@ class Board:
             raise ValueError("Coordonnées hors du plateau.")
 
         # Vérifier la couleur
-        if color not in ("black", "white"):
+        if not isinstance(color, Color):
             raise ValueError("Couleur invalide.")
 
         # Vérifier si la case est libre
@@ -31,8 +32,11 @@ class Board:
         # Créer et placer la pièce
         self.board[row][col] = Piece(color)
 
-    def eval_score(self, color):
+    def eval_score(self, color: Color):
         # Calculer le score d'une couleur
+        if not isinstance(color, Color):
+            raise ValueError("Couleur invalide.")
+
         score = 0
 
         for row in self.board:
@@ -57,7 +61,6 @@ class Board:
 
         raise TypeError("L'accès doit être un entier ou un tuple.")
 
-    # Affichage du plateau Othello
     def display(self):
         # Symboles des pièces
         BLACK = "●"
@@ -70,8 +73,6 @@ class Board:
 
         # En-tête des colonnes
         print("\n     0   1   2   3   4   5   6   7")
-
-        # Bordure supérieure
         print("   +" + "---+" * 8)
 
         for i, row in enumerate(self.board):
@@ -80,7 +81,7 @@ class Board:
             for piece in row:
                 if piece is None:
                     symbol = EMPTY
-                elif piece.color == "black":
+                elif piece.color == Color.BLACK:
                     symbol = BLACK
                 else:
                     symbol = WHITE
@@ -89,7 +90,5 @@ class Board:
                 print(f"{GREEN} {symbol} {RESET}|", end="")
 
             print()
-
-            # Séparation entre les lignes
             print("   +" + "---+" * 8)
 

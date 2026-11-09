@@ -1,30 +1,39 @@
 
 from piece import Piece
+from datatypes import Color
+
 
 # TEST 1 : Création d'une pièce noire
-piece_black = Piece("black")
-assert piece_black.color == "black"
+piece = Piece(Color.BLACK)
+assert piece.color == Color.BLACK
 print("TEST 1 réussi : création d'une pièce noire")
 
+
 # TEST 2 : Création d'une pièce blanche
-piece_white = Piece("white")
-assert piece_white.color == "white"
+piece = Piece(Color.WHITE)
+assert piece.color == Color.WHITE
 print("TEST 2 réussi : création d'une pièce blanche")
 
-# TEST 3 : Retourner une pièce noire en blanche
-piece_black.flip()
-assert piece_black.color == "white"
-print("TEST 3 réussi : flip black -> white")
 
-# TEST 4 : Retourner une pièce blanche en noire
-piece_white.flip()
-assert piece_white.color == "black"
-print("TEST 4 réussi : flip white -> black")
+# TEST 3 : Vérification du flip noir vers blanc
+piece = Piece(Color.BLACK)
+piece.flip()
+assert piece.color == Color.WHITE
+print("TEST 3 réussi : flip noir vers blanc")
 
-# TEST 5 : Retourner deux fois une pièce
-piece_black.flip()
-piece_black.flip()
-assert piece_black.color == "white"
-print("TEST 5 réussi : deux retournements")
+
+# TEST 4 : Vérification du flip blanc vers noir
+piece.flip()
+assert piece.color == Color.BLACK
+print("TEST 4 réussi : flip blanc vers noir")
+
+
+# TEST 5 : Vérification d'une couleur invalide
+try:
+    Piece("red")
+    assert False, "Une erreur aurait dû être déclenchée."
+except ValueError:
+    print("TEST 5 réussi : rejet d'une couleur invalide")
+
 
 print("\nTous les tests Piece sont réussis !")
